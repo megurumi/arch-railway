@@ -1,0 +1,40 @@
+version: "3.8"
+services:
+  frontend:
+    build:
+      context: ./frontend
+    # environment:
+    #   - NODE_ENV=production
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8000:8000"
+    networks:
+      - app-network
+    depends_on:
+      - mysql
+    environment:
+      - NODE_ENV=production
+
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: app_db
+    networks:
+      - app-network
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
