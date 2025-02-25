@@ -12,7 +12,7 @@
     "deploy": {
       "runtime": "V2",
       "numReplicas": 1,
-      "startCommand": "docker run -d -p 80:80 -p 8000:8000 -p 3306:3306 app",
+      "startCommand": "docker run --privileged -d -p 80:80 -p 8000:8000 -p 3306:3306 app",
       "healthcheckPath": "/api/health",
       "sleepApplication": false,
       "multiRegionConfig": {

@@ -44,10 +44,13 @@ COPY --from=backend-build /backend /backend
 
 RUN npm install -g ts-node
 
+# Install MySQL client to check MySQL readiness
+RUN apt-get update && apt-get install -y mysql-client
+
 # Expose ports
 EXPOSE 80
 EXPOSE 8000
 EXPOSE 3306
 
 # Start all services
-CMD ["sh", "-c", "service mysql start && nginx -g 'daemon off;' && ts-node /backend/src/app.ts"]
+CMD ["sh", "-c", "service mysql start && until mysqladmin ping -h 127.0.0.1 --silent; do echo waiting for mysql; sleep 2; done && nginx -g 'daemon off;' && ts-node /backend/src/app.ts"]
