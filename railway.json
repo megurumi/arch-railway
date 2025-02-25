@@ -2,7 +2,7 @@
     "$schema": "https://railway.com/railway.schema.json",
     "build": {
       "builder": "DOCKERFILE",
-      "buildCommand": "docker-compose build",
+      "buildCommand": "docker-compose -f docker-compose.yml build",
       "nixpacksPlan": {
         "providers": ["node"]
       },
@@ -14,7 +14,7 @@
     "deploy": {
       "runtime": "V2",
       "numReplicas": 1,
-      "startCommand": "docker-compose up",
+      "startCommand": "docker-compose -f docker-compose.yml up",
       "healthcheckPath": "/api/health",
       "sleepApplication": false,
       "multiRegionConfig": {
