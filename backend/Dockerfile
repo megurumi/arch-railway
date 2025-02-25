@@ -5,20 +5,20 @@ WORKDIR /app
 
 COPY package*.json ./
 
-# Remove node_modules and package-lock.json if they exist
-RUN rm -rf node_modules package-lock.json
-
 RUN npm install
 
 COPY . .
 
+# Ensure the TypeScript files are compiled
 RUN npm run build
 
-# Stage 2: Serve the application
-FROM nginx:alpine
+# Stage 2: Run the application
+FROM node:18
 
-COPY --from=build /app/dist /usr/share/nginx/html
+WORKDIR /app
 
-EXPOSE 8080
+COPY --from=build /app /app
 
-CMD ["nginx", "-g", "daemon off;"]
+RUN npm install -g ts-node
+
+CMD ["ts-node", "src/app.ts"]

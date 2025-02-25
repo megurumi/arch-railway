@@ -1,40 +1,35 @@
-version: "3.8"
 services:
-  frontend:
-    build:
-      context: ./frontend
-    # environment:
-    #   - NODE_ENV=production
-    ports:
-      - "8080:8080"
-    networks:
-      - app-network
-
   backend:
     build:
       context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend:/app
     ports:
       - "8000:8000"
-    networks:
-      - app-network
-    depends_on:
-      - mysql
     environment:
-      - NODE_ENV=production
+      - COMPOSE_BAKE=true
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "80:80"
+    environment:
+      - COMPOSE_BAKE=true
 
   mysql:
-    image: mysql:8
+    image: mysql:8.0.41
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: app_db
-    networks:
-      - app-network
+    ports:
+      - "3306:3306"
     volumes:
       - mysql-data:/var/lib/mysql
-
-networks:
-  app-network:
-    driver: bridge
 
 volumes:
   mysql-data:

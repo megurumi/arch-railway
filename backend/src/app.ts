@@ -1,33 +1,22 @@
 import fastify from "fastify";
-import mysql from "mysql2";
+import fastifyCors from "@fastify/cors";
+import { registerHealthRoutes } from "./routes/health";
+import { registerUserRoutes } from "./routes/users";
 
 const app = fastify({ logger: true });
 
-// Connection à MySQL
-const pool = mysql.createPool({
-  host: "mysql",
-  user: "root",
-  password: "password",
-  database: "app_db",
+// Enable CORS
+app.register(fastifyCors, {
+  origin: "*",
 });
 
-app.get("/api", async (request, reply) => {
-  return { message: "Hello from Fastify!" };
-});
-
-app.get("/api/data", async (request, reply) => {
-  pool.query("SELECT * FROM users", (err, results) => {
-    if (err) {
-      reply.status(500).send({ error: "Database error" });
-    } else {
-      reply.send(results);
-    }
-  });
-});
+// Register routes
+registerHealthRoutes(app);
+registerUserRoutes(app);
 
 const start = async () => {
   try {
-    await app.listen({ port: 8000 });
+    await app.listen({ port: 8000, host: "0.0.0.0" });
     console.log(`Server listening at http://localhost:8000`);
   } catch (err) {
     app.log.error(err);
