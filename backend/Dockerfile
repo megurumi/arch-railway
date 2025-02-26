@@ -12,13 +12,18 @@ COPY . .
 # Ensure the TypeScript files are compiled
 RUN npm run build
 
-# Stage 2: Run the application
+# Stage 2: Run the application (production-ready)
 FROM node:18
 
 WORKDIR /app
 
 COPY --from=build /app /app
 
-RUN npm install -g ts-node
+# Install only production dependencies
+RUN npm install --omit=dev
 
-CMD ["ts-node", "src/app.ts"]
+# Expose backend port (8000)
+EXPOSE 8000
+
+# Run the compiled JavaScript application
+CMD ["node", "dist/app.js"]
