@@ -4,10 +4,7 @@
       "builder": "DOCKERFILE",
       "dockerfilePath": "./Dockerfile",
       "buildCommand": "docker build -t app .",
-      "watchPatterns": [
-        "frontend/*",
-        "backend/*"
-      ]
+      "watchPatterns": ["*"]
     },
     "deploy": {
       "runtime": "V2",
