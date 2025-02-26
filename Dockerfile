@@ -45,7 +45,7 @@ COPY --from=backend-build /backend /backend
 RUN npm install -g ts-node
 
 # Install MySQL client to check MySQL readiness
-RUN apt-get update && apt-get install -y mysql-client
+RUN apt-get update && apt-get install -y default-mysql-client
 
 # Expose ports
 EXPOSE 80
