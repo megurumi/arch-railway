@@ -1,23 +1,16 @@
 {
-    "$schema": "https://railway.com/railway.schema.json",
-    "build": {
-      "builder": "DOCKERFILE",
-      "dockerfilePath": "./Dockerfile",
-      "buildCommand": "docker build -t app .",
-      "watchPatterns": ["*"]
-    },
-    "deploy": {
-      "runtime": "V2",
-      "numReplicas": 1,
-      "startCommand": "docker run --privileged -d -p 80:80 -p 8000:8000 -p 3306:3306 app",
-      "healthcheckPath": "/api/health",
-      "sleepApplication": false,
-      "multiRegionConfig": {
-        "us-west2": {
-          "numReplicas": 1
-        }
-      },
-      "restartPolicyType": "ON_FAILURE",
-      "restartPolicyMaxRetries": 10
-    }
+  "$schema": "https://railway.com/railway.schema.json",
+  "build": {
+    "builder": "DOCKERFILE",
+    "dockerfilePath": "./Dockerfile",
+    "watchPatterns": ["backend/*", "frontend/*", "Dockerfile"]
+  },
+  "deploy": {
+    "runtime": "V2",
+    "numReplicas": 1,
+    "healthcheckPath": "/api/health",
+    "sleepApplication": false,
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 10
   }
+}
