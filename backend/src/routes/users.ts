@@ -10,16 +10,18 @@ export function registerUserRoutes(app: FastifyInstance) {
       console.log(pool.config);
       console.log("-----------------");
 
-      pool.query("SELECT id, name FROM users", (error, results) => {
+      try {
+        const [results] = await pool.query("SELECT id, name FROM users");
         console.log("-----------------");
         console.log("results");
         console.log(results);
         console.log("-----------------");
-        if (error) {
-          return reply.status(500).send({ error: "Database query failed" });
-        }
+
         return reply.send({ users: results });
-      });
+      } catch (error) {
+        console.error("Database query failed:", error);
+        return reply.status(500).send({ error: "Database query failed" });
+      }
     }
   );
 }
