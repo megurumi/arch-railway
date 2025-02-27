@@ -3,27 +3,31 @@ FROM node:18 AS build
 
 WORKDIR /app
 
-# Install dependencies
+# Copy package.json and install dependencies
 COPY package*.json ./
 RUN npm install
 
-# Copy the full source code
+# Set environment variable for the build stage
+ARG VITE_BACKEND_URL
+ENV VITE_BACKEND_URL=$VITE_BACKEND_URL
+
+# Copy all source files
 COPY . .
 
-# Run build (ensure the build output goes to /dist)
+# Run the build command
 RUN npm run build
 
 # Stage 2: Serve the application with Nginx
 FROM nginx:alpine
 
+# Use a custom Nginx config (important for Vue routing)
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 # Copy the built frontend files into the Nginx container
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# Use a custom Nginx config (important for Vue/React routing)
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-# Expose port 8080 (important for Railway)
+# Expose port 8080 for Nginx
 EXPOSE 8080
 
-# Start Nginx
+# Run Nginx in the foreground
 CMD ["nginx", "-g", "daemon off;"]
