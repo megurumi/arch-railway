@@ -7,7 +7,7 @@ COPY package*.json ./
 
 RUN npm install
 
-COPY . .
+COPY ./backend .
 
 # Ensure the TypeScript files are compiled
 RUN npm run build

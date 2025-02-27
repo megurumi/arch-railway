@@ -3,7 +3,7 @@
   "build": {
     "builder": "DOCKERFILE",
     "dockerfilePath": "./Dockerfile",
-    "watchPatterns": ["backend/*", "frontend/*", "Dockerfile"]
+    "watchPatterns": ["backend/*", "Dockerfile"]
   },
   "deploy": {
     "runtime": "V2",
