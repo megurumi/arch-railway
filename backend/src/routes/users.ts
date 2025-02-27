@@ -1,7 +1,7 @@
-// import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 // import mysql from "mysql2";
 
-// Connection à MySQL
+// // Connection à MySQL
 // const pool = mysql.createPool({
 //   host: "mysql",
 //   user: "root",
@@ -9,8 +9,17 @@
 //   database: "app_db",
 // });
 
-// export function registerUserRoutes(app: FastifyInstance) {
-//   app.get("/api/users", async (request: FastifyRequest, reply: FastifyReply) => {
-//     reply.send({ users: [{ id: 1, name: "mon cul" }] });
-//   });
-// }
+export function registerUserRoutes(app: FastifyInstance) {
+  app.get(
+    "/api/users",
+    async (request: FastifyRequest, reply: FastifyReply) => {
+      reply.send({
+        users: [
+          { id: 1, name: "User 1" },
+          { id: 2, name: "User 2" },
+          { id: 3, name: "User 3" },
+        ],
+      });
+    }
+  );
+}

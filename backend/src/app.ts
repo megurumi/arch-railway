@@ -1,7 +1,7 @@
 import fastify from "fastify";
 import fastifyCors from "@fastify/cors";
 import { registerHealthRoutes } from "./routes/health";
-// import { registerUserRoutes } from "./routes/users";
+import { registerUserRoutes } from "./routes/users";
 
 const app = fastify({ logger: true });
 
@@ -12,7 +12,7 @@ app.register(fastifyCors, {
 
 // Register routes
 registerHealthRoutes(app);
-// registerUserRoutes(app);
+registerUserRoutes(app);
 
 const DEFAULT_PORT = 8000;
 
