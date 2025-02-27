@@ -17,9 +17,6 @@ RUN npm run build
 # Stage 2: Serve the application with Nginx
 FROM nginx:alpine
 
-# Copy the custom nginx.conf into the container
-COPY nginx.conf /etc/nginx/nginx.conf
-
 # Copy the built frontend files into the Nginx container
 COPY --from=build /app/dist /usr/share/nginx/html
 
