@@ -1,24 +1,15 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-// import mysql from "mysql2";
-
-// // Connection à MySQL
-// const pool = mysql.createPool({
-//   host: "mysql",
-//   user: "root",
-//   password: "password",
-//   database: "app_db",
-// });
+import { pool } from "../db/pool";
 
 export function registerUserRoutes(app: FastifyInstance) {
   app.get(
     "/api/users",
     async (request: FastifyRequest, reply: FastifyReply) => {
-      reply.send({
-        users: [
-          { id: 1, name: "User 1" },
-          { id: 2, name: "User 2" },
-          { id: 3, name: "User 3" },
-        ],
+      pool.query("SELECT id, name FROM users", (error, results) => {
+        if (error) {
+          return reply.status(500).send({ error: "Database query failed" });
+        }
+        return reply.send({ users: results });
       });
     }
   );
