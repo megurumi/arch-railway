@@ -5,7 +5,7 @@ pool.query(
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL
   )`,
-  (error) => {
+  (error: Error | null) => {
     if (error) {
       console.error("Failed to create users table:", error);
     } else {
