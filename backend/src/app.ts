@@ -2,6 +2,9 @@ import fastify from "fastify";
 import fastifyCors from "@fastify/cors";
 import { registerHealthRoutes } from "./routes/health";
 import { registerUserRoutes } from "./routes/users";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = fastify({ logger: true });
 
