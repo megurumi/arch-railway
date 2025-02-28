@@ -21,7 +21,7 @@ const DEFAULT_PORT = 8000;
 
 const start = async () => {
   try {
-    const port = parseInt(process.env.PORT || `${DEFAULT_PORT}`);
+    const port = parseInt(process.env.BACKEND_PORT || `${DEFAULT_PORT}`);
     app.listen({
       port,
       host: "0.0.0.0",
