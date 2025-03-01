@@ -2,10 +2,12 @@
 FROM node:18 AS build
 
 ARG BACKEND_URL
+ARG FRONTEND_PORT
 
 WORKDIR /app
 
 ENV VITE_BACKEND_URL=$BACKEND_URL
+ENV FRONTEND_PORT=$FRONTEND_PORT
 
 COPY package*.json ./
 
@@ -26,7 +28,7 @@ COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/dist /usr/share/nginx/html
 
 # Expose port 8080 for Nginx
-EXPOSE 8080
+EXPOSE $FRONTEND_PORT
 
 # Run Nginx in the foreground
 CMD ["nginx", "-g", "daemon off;"]

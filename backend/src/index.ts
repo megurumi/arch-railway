@@ -1,12 +1,7 @@
-import fastify from "fastify";
-import { registerUserRoutes } from "./routes/users";
 import dotenv from "dotenv";
-
 dotenv.config();
 
-const app = fastify({ logger: true });
-
-registerUserRoutes(app);
+import { app, port } from "./app";
 
 app.ready((err) => {
   if (err) {
@@ -14,7 +9,7 @@ app.ready((err) => {
     process.exit(1);
   }
 
-  app.listen({ port: 8080 }, (err, address) => {
+  app.listen({ port }, (err, address) => {
     if (err) {
       app.log.error(err);
       process.exit(1);
