@@ -1,9 +1,8 @@
-import fastify from "fastify";
-import fastifyCors from "@fastify/cors";
-import { registerHealthRoutes } from "./routes/health";
-import { registerUserRoutes } from "./routes/users";
-import dotenv from "dotenv";
-import { DEFAULT_BACKEND_PORT } from "./constants";
+// import fastify from "fastify";
+// import fastifyCors from "@fastify/cors";
+// import { registerHealthRoutes } from "./routes/health";
+// import { registerUserRoutes } from "./routes/users";
+// import { DEFAULT_BACKEND_PORT } from "./constants";
 
 // const app = fastify({ logger: true });
 // const port = parseInt(process.env.BACKEND_PORT || DEFAULT_BACKEND_PORT);
@@ -31,6 +30,12 @@ import { DEFAULT_BACKEND_PORT } from "./constants";
 
 // start();
 
+import fastify from "fastify";
+import fastifyCors from "@fastify/cors";
+import { registerHealthRoutes } from "./routes/health";
+import { registerUserRoutes } from "./routes/users";
+import dotenv from "dotenv";
+
 dotenv.config();
 
 const app = fastify({ logger: true });
@@ -44,10 +49,12 @@ app.register(fastifyCors, {
 registerHealthRoutes(app);
 registerUserRoutes(app);
 
+const DEFAULT_PORT = 8000;
+
 const start = async () => {
   try {
-    console.log(`port from env: ${process.env.BACKEND_PORT}`);
-    const port = parseInt(process.env.BACKEND_PORT || `${DEFAULT_BACKEND_PORT}`);
+    console.log("process.env.PORT", process.env.PORT);
+    const port = parseInt(process.env.PORT || `${DEFAULT_PORT}`);
     app.listen({
       port,
       host: "0.0.0.0",
