@@ -1,4 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import "./app";
+import { start } from "./app";
+
+start();
