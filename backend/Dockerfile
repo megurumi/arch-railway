@@ -40,4 +40,4 @@ RUN npm install --omit=dev
 EXPOSE $BACKEND_PORT
 
 # Run the compiled JavaScript application
-CMD ["node", "dist/app.js"]
+CMD ["node", "dist/index.js"]
