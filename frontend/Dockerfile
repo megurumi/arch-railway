@@ -22,7 +22,7 @@ RUN npm run build
 FROM nginx:alpine
 
 # Use a custom Nginx config (important for Vue routing)
-COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY ./nginx-app.conf /etc/nginx/conf.d/default.conf
 
 # Copy the built frontend files into the Nginx container
 COPY --from=build /app/dist /usr/share/nginx/html
