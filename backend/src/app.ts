@@ -20,7 +20,7 @@ registerUserRoutes(app);
 
 const start = async () => {
   try {
-    await app.listen({ port, host: "0.0.0.0" });
+    app.listen({ port, host: "0.0.0.0" });
     app.log.info(`Server listening on port ${port}`);
   } catch (err) {
     app.log.error(err);
