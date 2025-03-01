@@ -5,10 +5,35 @@ import { registerUserRoutes } from "./routes/users";
 import dotenv from "dotenv";
 import { DEFAULT_BACKEND_PORT } from "./constants";
 
+// const app = fastify({ logger: true });
+// const port = parseInt(process.env.BACKEND_PORT || DEFAULT_BACKEND_PORT);
+
+// console.log("Initializing Fastify app...");
+
+// // Enable CORS
+// app.register(fastifyCors, {
+//   origin: "*",
+// });
+
+// // Register routes
+// registerHealthRoutes(app);
+// registerUserRoutes(app);
+
+// const start = async () => {
+//   try {
+//     app.listen({ port, host: "0.0.0.0" });
+//     app.log.info(`Server listening on port ${port}`);
+//   } catch (err) {
+//     app.log.error(err);
+//     process.exit(1);
+//   }
+// };
+
+// start();
+
 dotenv.config();
 
 const app = fastify({ logger: true });
-const port = parseInt(process.env.BACKEND_PORT || DEFAULT_BACKEND_PORT);
 
 // Enable CORS
 app.register(fastifyCors, {
@@ -21,10 +46,14 @@ registerUserRoutes(app);
 
 const start = async () => {
   try {
+    console.log(`port from env: ${process.env.BACKEND_PORT}`);
+    const port = parseInt(process.env.BACKEND_PORT || `${DEFAULT_BACKEND_PORT}`);
     app.listen({
       port,
       host: "0.0.0.0",
     });
+
+    console.log(`Server listening at port ${port}`);
   } catch (err) {
     app.log.error(err);
     process.exit(1);
