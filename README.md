@@ -1,5 +1,14 @@
 # megurumi
 
+## Infrastructure
+
+We use railway to build and deploy services. Each service is independant, and will be expose by railway on PORT 8080.
+
+For local dev, you need to set different port for frontend and backend services:
+
+- 8080 for the frontend
+- 8000 for the backend
+
 ## Frontend
 
 ### Build and Run
