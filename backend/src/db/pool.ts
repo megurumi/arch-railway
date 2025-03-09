@@ -13,7 +13,7 @@ const requiredEnvVars = [
 ];
 requiredEnvVars.forEach((varName) => {
   if (!process.env[varName]) {
-    console.error(`❌ Environment variable ${varName} is not set.`);
+    console.error(`FAIL - MySQL - Variable ${varName} is not set.`);
   }
 });
 
@@ -24,7 +24,7 @@ export const pool = mysql.createPool({
   password: process.env.MYSQL_PASSWORD,
   database: process.env.MYSQL_DATABASE,
   waitForConnections: true,
-  connectionLimit: 10,
+  connectionLimit: 2,
   queueLimit: 0,
   ssl: { rejectUnauthorized: false },
 });
